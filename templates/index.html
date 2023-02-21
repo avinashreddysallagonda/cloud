@@ -1,0 +1,53 @@
+<html>
+    <head>
+        <title> Assignment 2 </title>
+    </head>
+    <body>
+        <h2> Assignment 2 </h2>
+        <body>
+            <tr>
+            <form class="example" method="post" action=""
+            style="margin:auto;max-width:850px">
+                <h3>Search for and count all earthquakes that occurred with a magnitude greater  
+                    than 5.0 </h3>
+               <input type="text" placeholder="Search" name="input">
+               <button type="submit" class="btn btn-secondary btn-md"><i class="fa fa-search"></i>search</button>
+               <br>
+               <br>
+                <h3>Search for 2.0 to 2.5, 2.5 to 3.0, etc magnitude quakes for a one week,  
+                    a range of days or the whole 30 days. </h3>
+               <input type="date" id="data-apreensao" name="from" class="form-control" format="dd/mm/yyyy" placeholder="DD-MM-YYYY">
+               <input type="date" id="data-apreensao" name="to" class="form-control" format="dd/mm/yyyy" placeholder="DD-MM-YYYY">
+               <input type="text" id="data-apreensao" name="scale1" class="form-control"  placeholder="mag_from">
+               <input type="text" id="data-apreensao" name="scale2" class="form-control"  placeholder="mag_to">
+
+               <button type="submit" class="btn btn-secondary btn-md"><i class="fa fa-search"></i>search</button> 
+               <br>
+               <br>
+               <br>
+                <h3>Find earthquakes that were near (20 km, 50 km?) of a specified location.</h3>
+               <input type="text" placeholder="latitude" name="from_mag">
+               <input type="text" placeholder="longitude" name="to_mag">
+               <input type="text" placeholder="distance" name="distance">
+
+               <button type="submit" class="btn btn-secondary btn-md"><i class="fa fa-search"></i>search</button>
+               <br>
+               <br>
+
+               <h3>Do large (>4.0 mag) occur more often at night? </h3>
+
+               <input type="text" placeholder="mag" name="mag"/>
+               <button type="submit" class="btn btn-secondary btn-md"><i class="fa fa-search"></i>search</button>
+
+               <br>
+               <br>
+               
+            </form>
+            {% if data %}
+                {% for i in data%}
+                    <br><p>{{i}}
+                {% endfor %}
+            {%endif%}
+                    </tr>
+        </body>
+</html>s
