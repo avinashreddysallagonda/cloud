@@ -1,4 +1,5 @@
-from datetime import datetime
+from datetime import datetime        
+
 from flask import Flask, request, render_template
 from flask import Flask
 import pyodbc
@@ -15,13 +16,15 @@ cursor = connection.cursor()
 def index():
     data = None
     if request.method == "POST":
-        input = request.form['input']
-        date_from = request.form['from']
-        date_to = request.form['to']
-        scale1 = request.form['scale1']
-        scale2 = request.form['scale2']
-        if input:
-            sql1 = f"SELECT TOP {input} * FROM earthquake ORDER BY mag DESC"
+        # input = request.form['input']
+       
+       
+        if request.form['pop1']!='' and request.form['pop2']!='' and request.form['n1']!='':
+            pop2 = int(request.form['pop2'])
+            pop1 = int(request.form['pop1'])
+            n1 = int(request.form['n1'])
+            print(pop1,pop2,n1)
+            sql1 = f"SELECT * FROM (SELECT *, ROW_NUMBER() OVER (ORDER BY Population DESC) as rn FROM datas WHERE Population BETWEEN {pop1} AND {pop2}) as t1 WHERE t1.rn <= {n1} UNION  SELECT * FROM(SELECT *, ROW_NUMBER() OVER (ORDER BY Population ASC) as rn FROM datas WHERE Population BETWEEN {pop1} AND {pop2}) as t2 WHERE t2.rn <= {n1} ORDER BY rn;"
             cursor.execute(sql1)
             data = cursor.fetchall()
             rows=[]
@@ -30,42 +33,62 @@ def index():
             print(rows)
             return render_template('largest.html', ci=rows)
 
-        elif date_from and date_to and scale1 and scale2:
-            sql2 = f"SELECT * from earthquake where time between '{date_from}' and '{date_to}' and mag > {scale1} and mag<{scale2}"
-            cursor.execute(sql2)
-            data = cursor.fetchall()
-            return render_template('magrange.html',ci=data)
-       
-        elif request.form.get('from_mag') and request.form.get('to_mag') and request.form.get('distance'):
-            lat = float(request.form['from_mag'])
-            lon = float(request.form['to_mag'])
-            distance = float(request.form['distance'])
+        elif request.form['from_lat']!='' and request.form['to_lat']!='' and request.form['from_lon']!='' and request.form['to_lon']!='' :
+            lat1 = float(request.form['from_lat'])
+            lat2 = float(request.form['to_lat'])
+            lon1 = float(request.form['from_lon'])
+            lon2 = float(request.form['to_lon'])
             data = []
-            r = 6371  # radius of the Earth in kilometers
-            lat_rad = math.radians(lat)
-            lon_rad = math.radians(lon)
-
-            a = 6378.137  # equatorial radius of Earth in km
-            e = 0.0818191908426  # eccentricity of Earth's ellipsoid
-            R = a * math.sqrt(1 - e**2 * math.sin(lat_rad)**2) / (1 - e**2 * math.sin(lon_rad)**2)
-
-    # Calculate angular distance covered by the distance
-            delta = distance / R
-
-    # Calculate range of latitude and longitude values
-            lat_min = lat - math.degrees(delta)
-            lat_max = lat + math.degrees(delta)
-            lon_min = lon - math.degrees(delta / math.cos(lat_rad))
-            lon_max = lon + math.degrees(delta / math.cos(lat_rad))
-            print(distance,lat_min,lon_min)
-            sql11 = f"SELECT * FROM earthquake WHERE  latitude <= {lat_max} AND latitude>={lat_min} AND longitude>={lon_min} AND longitude<={lon_max}"
+            sql11 = f"SELECT * FROM datas WHERE  lat between {lat1} AND {lat2} AND lon between {lon1} AND {lon2}"
 
             cursor.execute(sql11)
             data = cursor.fetchall()
             return render_template('latlon.html',ci=data)
+        
+        elif request.form['state']!='' and request.form['pop11']!='' and request.form['pop12']!='' and request.form['inc']!='':
+            pop2 = int(request.form['pop12'])
+            pop1 = int(request.form['pop11'])
+            n1 = (request.form['state'])
+            print(n1)
+            inc = int(request.form['inc'])
 
-        elif request.form.get('mag')  :
-            
+            sql=f"UPDATE datas SET Population = Population + {inc} WHERE State = '{n1}' AND Population BETWEEN {pop1} AND {pop2}"
+            cursor.execute(sql)
+
+
+            sql1=f"SELECT City, State, Population FROM datas WHERE State = '{n1}' AND Population BETWEEN {pop1+inc} AND {pop2+inc}"
+            cursor.execute(sql1)
+            data = cursor.fetchall()
+            lis=len(data)
+
+            return render_template('magnitude.html',lis=lis,ci=data)
+
+        elif request.form['state1']!='' and request.form['lat3']!='' and request.form['lon3']!='' and request.form['pop13']!='' and request.form['city']!='':
+            pop = int(request.form['pop13'])
+            state = (request.form['state1'])
+            lat = float(request.form['lat3'])
+            lon = float(request.form['lon3'])
+            city = (request.form['city'])
+           
+            insert_query = f"INSERT INTO datas (City, State, Population, lat, lon) VALUES ('{city}', '{state}', {pop}, {lat}, {lon})"
+            cursor.execute(insert_query)
+            data = cursor.fetchall()
+            return render_template('largest.html',ci=data)
+
+        elif request.form['state2']!=''   and request.form['city1']!='':
+            # pop = int(request.form['pop14'])
+            state = (request.form['state3'])
+            # lat = float(request.form['lat4'])
+            # lon = float(request.form['lon4'])
+            city = (request.form['city1'])
+            insert_query = f"DELETE FROM datas WHERE City = '{city}' AND state_name = '{state}'"
+
+            cursor.execute(insert_query)
+            data = cursor.fetchall()
+            return render_template('largest.html',ci=data)
+
+        
+
         # convert the date strings to datetime objects
             
             mag = float(request.form['mag'])
@@ -134,7 +157,7 @@ def uploadData():
     cursor.close()  
 # uploadData()
 if __name__ == '__main__':
-   app.run(debug = True)
+   app.run()
 
 
 
