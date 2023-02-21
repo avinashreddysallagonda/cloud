@@ -1,53 +1,55 @@
 <html>
     <head>
-        <title> Assignment 2 </title>
+        <title> quiz 2 </title>
     </head>
     <body>
-        <h2> Assignment 2 </h2>
+        <h2> quiz 2 </h2>
         <body>
             <tr>
             <form class="example" method="post" action=""
             style="margin:auto;max-width:850px">
-                <h3>Search for and count all earthquakes that occurred with a magnitude greater  
-                    than 5.0 </h3>
-               <input type="text" placeholder="Search" name="input">
+                <h3>population and n </h3>
+                <input type="text" id="data-apreensao" name="pop1" class="form-control" format="start" placeholder="value">
+               <input type="text" id="data-apreensao" name="pop2" class="form-control" format="end" placeholder="value">
+               <input type="text" id="data-apreensao" name="n1" class="form-control"  placeholder="enter n">
                <button type="submit" class="btn btn-secondary btn-md"><i class="fa fa-search"></i>search</button>
                <br>
                <br>
-                <h3>Search for 2.0 to 2.5, 2.5 to 3.0, etc magnitude quakes for a one week,  
-                    a range of days or the whole 30 days. </h3>
-               <input type="date" id="data-apreensao" name="from" class="form-control" format="dd/mm/yyyy" placeholder="DD-MM-YYYY">
-               <input type="date" id="data-apreensao" name="to" class="form-control" format="dd/mm/yyyy" placeholder="DD-MM-YYYY">
-               <input type="text" id="data-apreensao" name="scale1" class="form-control"  placeholder="mag_from">
-               <input type="text" id="data-apreensao" name="scale2" class="form-control"  placeholder="mag_to">
-
-               <button type="submit" class="btn btn-secondary btn-md"><i class="fa fa-search"></i>search</button> 
-               <br>
-               <br>
-               <br>
-                <h3>Find earthquakes that were near (20 km, 50 km?) of a specified location.</h3>
-               <input type="text" placeholder="latitude" name="from_mag">
-               <input type="text" placeholder="longitude" name="to_mag">
-               <input type="text" placeholder="distance" name="distance">
-
-               <button type="submit" class="btn btn-secondary btn-md"><i class="fa fa-search"></i>search</button>
-               <br>
-               <br>
-
-               <h3>Do large (>4.0 mag) occur more often at night? </h3>
-
-               <input type="text" placeholder="mag" name="mag"/>
+               <h3> min and max lat and lon</h3>
+               <input type="text" placeholder="lat1" name="from_lat" placeholder="lat1">
+               <input type="text" placeholder="lat2" name="to_lat" placeholder="lat2">
+               <input type="text" placeholder="lon1" name="from_lon" placeholder="lon1">
+               <input type="text" placeholder="lon2" name="to_lon" placeholder="lon2">
                <button type="submit" class="btn btn-secondary btn-md"><i class="fa fa-search"></i>search</button>
 
-               <br>
-               <br>
+               <h3> add inc to pop range</h3>
+               <input type="text" placeholder="state" name="state" >
+               <input type="text" id="data-apreensao" name="pop11"  placeholder="value">
+               <input type="text" id="data-apreensao" name="pop12"  placeholder="value">
+               <input type="text" placeholder="increment" name="inc">
+               <button type="submit" class="btn btn-secondary btn-md"><i class="fa fa-search"></i>search</button>
+
+               <h3> insert</h3>
+               <input type="text" placeholder="state1" name="state" >
+               <input type="text" id="data-apreensao" name="pop13"  placeholder="value">
+               <input type="text" id="data-apreensao" name="city"  placeholder="value">
+               <input type="text" id="data-apreensao" name="lat3"  placeholder="value">
+               <input type="text" id="data-apreensao" name="lon3"  placeholder="value">
+               <button type="submit" class="btn btn-secondary btn-md"><i class="fa fa-search"></i>Insert</button>
+
+               <h3> delete</h3>
+               <input type="text" placeholder="state" name="state3" >
+               <input type="text" id="data-apreensao" name="city1"  placeholder="value">
+         
+               <button type="submit" class="btn btn-secondary btn-md"><i class="fa fa-search"></i>Insert</button>
+
+
+                
+               
+               
                
             </form>
-            {% if data %}
-                {% for i in data%}
-                    <br><p>{{i}}
-                {% endfor %}
-            {%endif%}
+            
                     </tr>
         </body>
 </html>s

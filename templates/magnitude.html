@@ -1,26 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <style type="text/css">
-        body{
-            background-color: rgb(96, 137, 175);
-        }
+{% extends "base.html" %}
+{% block title %}Largest n Earthquake Information{% endblock %}
+{% block content %}
+
+<h1>1002034491, Avinash Sallagonda</h1>
+<h2>Earthquake information retrieval system</h2>
+
+<h4>Earthquake Information</h4>
+<table border="1px">
+  <thead>
+    <th>city</th>
+    <th>state</th>
+    <th>population</th>
     
-        </style>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>5th question</h1>
-    <center>
-        <h2>
-            The count of magnitude greater than {{mag}} at day {{ci}}
-        </h2>
-        <h2>
-            The count of magintudes greater than {{mag}} at night{{cj}}
-        </h2>
-    </center>
-</body>
-</html>
+  </thead>
+  <tbody>
+    {% for info in ci %}
+    <tr>
+      <td>{{info["City"]}}</td>
+      <td>{{info["State"]}}</td>
+      <td>{{info["Population"]}}</td>
+   
+    </tr>
+    {% endfor %}
+    <h3> updated count{{lis}}</h3>
+  </tbody>
+</table>
+{% endblock %}
